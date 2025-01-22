@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://c6pusjol3nqa2"]
+
+[ext_resource type="Texture2D" uid="uid://cyqcpe68uktxf" path="res://assets/MKTrack.png" id="1_ne215"]
+[ext_resource type="PackedScene" uid="uid://iihobhn6lxt3" path="res://player.tscn" id="2_sugm7"]
+
+[node name="Main" type="Node2D"]
+
+[node name="TextureRect" type="TextureRect" parent="."]
+texture_filter = 3
+offset_left = -2.0
+offset_top = -1221.0
+offset_right = 3958.0
+offset_bottom = 2739.0
+texture = ExtResource("1_ne215")
+
+[node name="player" parent="." instance=ExtResource("2_sugm7")]
+position = Vector2(368, 566)
