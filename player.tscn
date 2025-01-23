@@ -22,4 +22,7 @@ position = Vector2(-0.5, 0)
 shape = SubResource("RectangleShape2D_xe8vw")
 
 [node name="Camera2D" type="Camera2D" parent="."]
+ignore_rotation = false
 zoom = Vector2(0.55, 0.55)
+rotation_smoothing_enabled = true
+rotation_smoothing_speed = 1.0
