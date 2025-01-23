@@ -15,5 +15,3 @@ texture = ExtResource("1_ne215")
 
 [node name="player" parent="." instance=ExtResource("2_sugm7")]
 position = Vector2(368, 566)
-wheel_base = null
-steering_angle = null

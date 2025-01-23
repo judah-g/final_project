@@ -6,11 +6,9 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xe8vw"]
 size = Vector2(56, 59)
 
-[node name="player" type="RigidBody2D"]
+[node name="player" type="CharacterBody2D"]
 position = Vector2(-2, 0)
 script = ExtResource("1_n4hi1")
-wheel_base = null
-steering_angle = null
 metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
