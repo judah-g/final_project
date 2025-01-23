@@ -4,21 +4,21 @@
 [ext_resource type="Texture2D" uid="uid://bpebn5enbvlvu" path="res://assets/trueframes.png" id="2_bp8n7"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xe8vw"]
-size = Vector2(56, 59)
+size = Vector2(59, 54)
 
-[node name="player" type="RigidBody2D"]
+[node name="player" type="CharacterBody2D"]
 position = Vector2(-2, 0)
+motion_mode = 1
 script = ExtResource("1_n4hi1")
-wheel_base = null
-steering_angle = null
 metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+rotation = 1.5708
 scale = Vector2(0.013, 0.013)
 texture = ExtResource("2_bp8n7")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -0.5)
+position = Vector2(-0.5, 0)
 shape = SubResource("RectangleShape2D_xe8vw")
 
 [node name="Camera2D" type="Camera2D" parent="."]
