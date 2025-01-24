@@ -1,16 +1,102 @@
-[gd_scene load_steps=4 format=3 uid="uid://iihobhn6lxt3"]
+[gd_scene load_steps=18 format=3 uid="uid://iihobhn6lxt3"]
 
 [ext_resource type="Script" path="res://player.gd" id="1_n4hi1"]
+[ext_resource type="Texture2D" uid="uid://c8hql7i08o5kp" path="res://assets/miniturboframes/m1.png" id="2_7qs7w"]
 [ext_resource type="Texture2D" uid="uid://bpebn5enbvlvu" path="res://assets/trueframes.png" id="2_bp8n7"]
+[ext_resource type="Texture2D" uid="uid://cb2m7h7shauft" path="res://assets/miniturboframes/m2.png" id="3_o3jxd"]
+[ext_resource type="Texture2D" uid="uid://sfwf3k0ej6ud" path="res://assets/miniturboframes/m3.png" id="4_ok747"]
+[ext_resource type="Texture2D" uid="uid://drryrgk773ioe" path="res://assets/miniturboframes/m4.png" id="5_d4o11"]
+[ext_resource type="Texture2D" uid="uid://c6skvop1o81lv" path="res://assets/miniturboframes/o1.png" id="6_74mld"]
+[ext_resource type="Texture2D" uid="uid://5qu0mkpwlnoa" path="res://assets/miniturboframes/o2.png" id="7_how3c"]
+[ext_resource type="Texture2D" uid="uid://cuqxq08wjthac" path="res://assets/miniturboframes/o3.png" id="8_hsklg"]
+[ext_resource type="Texture2D" uid="uid://dgwxbr2uv6gg6" path="res://assets/miniturboframes/o4.png" id="9_ywhct"]
+[ext_resource type="Texture2D" uid="uid://ichr41iifbgu" path="res://assets/miniturboframes/p1.png" id="10_y4d83"]
+[ext_resource type="Texture2D" uid="uid://cbfw723tjk626" path="res://assets/miniturboframes/p2.png" id="11_5eml1"]
+[ext_resource type="Texture2D" uid="uid://43flhmcexdm2" path="res://assets/miniturboframes/p3.png" id="12_rwal7"]
+[ext_resource type="Texture2D" uid="uid://deo12pbpgnemw" path="res://assets/miniturboframes/p4.png" id="13_pgmd5"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_xe8vw"]
-size = Vector2(59, 54)
+[sub_resource type="SpriteFrames" id="SpriteFrames_her3a"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_7qs7w")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_o3jxd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_ok747")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_d4o11")
+}],
+"loop": true,
+"name": &"mini",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_74mld")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_how3c")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_hsklg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_ywhct")
+}],
+"loop": true,
+"name": &"orange",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("10_y4d83")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_5eml1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_rwal7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_pgmd5")
+}],
+"loop": true,
+"name": &"purple",
+"speed": 10.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_pwon2"]
+radius = 29.0
+height = 58.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_njy2u"]
+radius = 26.0
+height = 56.0
 
 [node name="player" type="CharacterBody2D"]
-position = Vector2(-2, 0)
 motion_mode = 1
 script = ExtResource("1_n4hi1")
 metadata/_edit_group_ = true
+
+[node name="LeftWheelMini" type="AnimatedSprite2D" parent="."]
+visible = false
+position = Vector2(-37, -22)
+rotation = 1.5708
+scale = Vector2(0.01, 0.01)
+sprite_frames = SubResource("SpriteFrames_her3a")
+animation = &"purple"
+
+[node name="RightWheelMini" type="AnimatedSprite2D" parent="."]
+visible = false
+position = Vector2(-37, 22)
+rotation = 1.5708
+scale = Vector2(0.01, 0.01)
+sprite_frames = SubResource("SpriteFrames_her3a")
+animation = &"purple"
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 rotation = 1.5708
@@ -19,10 +105,19 @@ texture = ExtResource("2_bp8n7")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-0.5, 0)
-shape = SubResource("RectangleShape2D_xe8vw")
+shape = SubResource("CapsuleShape2D_pwon2")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-ignore_rotation = false
 zoom = Vector2(0.55, 0.55)
 rotation_smoothing_enabled = true
 rotation_smoothing_speed = 1.0
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CapsuleShape2D_njy2u")
+
+[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
+[connection signal="area_exited" from="Area2D" to="." method="_on_area_2d_area_exited"]
