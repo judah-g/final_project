@@ -2,7 +2,7 @@ extends CharacterBody2D
 
 @export var wheel_base = 60
 @export var steering_angle_fast = 5
-@export var steering_angle_slow = 10
+@export var steering_angle_slow = 13
 @export var speed = 300
 @export var engine_power = 800
 @export var friction = -0.9
@@ -50,6 +50,7 @@ func start_game():
 	turbo_length = 0
 	drift_timer = 0
 	lap_number = 1
+	checkpoint_bool = false
 
 func _physics_process(delta):
 	acceleration = Vector2.ZERO
@@ -79,9 +80,10 @@ func get_input():
 	else:
 		steering_direction = direction * deg_to_rad(steering_angle_slow)
 	
-	if Input.is_action_pressed("drift"):
+	if Input.is_action_pressed("drift") && Input.is_action_pressed("accelerate"):
 		steering_direction = direction * deg_to_rad(drifting_angle)
-	
+	elif Input.is_action_pressed("drift"):
+		steering_direction = direction * deg_to_rad(steering_angle_slow)
 	
 	if Input.is_action_pressed("accelerate"):
 		if turbo_length > 0:
