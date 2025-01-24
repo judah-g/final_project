@@ -78,6 +78,7 @@ radius = 26.0
 height = 56.0
 
 [node name="player" type="CharacterBody2D"]
+visible = false
 motion_mode = 1
 script = ExtResource("1_n4hi1")
 metadata/_edit_group_ = true
@@ -112,12 +113,28 @@ zoom = Vector2(0.55, 0.55)
 rotation_smoothing_enabled = true
 rotation_smoothing_speed = 1.0
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="HazardDetector" type="Area2D" parent="."]
 collision_layer = 0
 collision_mask = 2
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HazardDetector"]
 shape = SubResource("CapsuleShape2D_njy2u")
 
-[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
-[connection signal="area_exited" from="Area2D" to="." method="_on_area_2d_area_exited"]
+[node name="CheckpointDetector" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CheckpointDetector"]
+shape = SubResource("CapsuleShape2D_njy2u")
+
+[node name="FinishDetector" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FinishDetector"]
+shape = SubResource("CapsuleShape2D_njy2u")
+
+[connection signal="area_entered" from="HazardDetector" to="." method="_on_hazard_entered"]
+[connection signal="area_exited" from="HazardDetector" to="." method="_on_hazard_exited"]
+[connection signal="area_entered" from="CheckpointDetector" to="." method="_on_checkpoint_entered"]
+[connection signal="area_entered" from="FinishDetector" to="." method="_on_finish_entered"]

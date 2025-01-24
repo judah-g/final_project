@@ -36,6 +36,20 @@ var drift_direction = ""
 
 var hazard_bool = false
 var hazard_tax = 0.5 
+var checkpoint_bool = false
+var lap_number = 1
+
+signal race_finish
+signal lap
+
+func start_game():
+	position = Vector2(376, 568)
+	rotation = deg_to_rad(270)
+	velocity = Vector2.ZERO
+	acceleration = Vector2.ZERO
+	turbo_length = 0
+	drift_timer = 0
+	lap_number = 1
 
 func _physics_process(delta):
 	acceleration = Vector2.ZERO
@@ -160,10 +174,19 @@ func do_turbo():
 	elif drift_timer < 0.5:
 		turbo_length = 0
 
-
-func _on_area_2d_area_entered(area):
+func _on_hazard_entered(area):
 	hazard_bool = true
 
-
-func _on_area_2d_area_exited(area):
+func _on_hazard_exited(area):
 	hazard_bool = false
+
+func _on_checkpoint_entered(area):
+	checkpoint_bool = true
+
+func _on_finish_entered(area):
+	if checkpoint_bool == true:
+		checkpoint_bool = false
+		lap_number += 1
+		emit_signal("lap")
+	if lap_number == 4:
+		emit_signal("race_finish")

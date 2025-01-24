@@ -1,8 +1,10 @@
-[gd_scene load_steps=6 format=4 uid="uid://c6pusjol3nqa2"]
+[gd_scene load_steps=10 format=4 uid="uid://c6pusjol3nqa2"]
 
+[ext_resource type="Script" path="res://main.gd" id="1_fypi5"]
 [ext_resource type="Texture2D" uid="uid://cyqcpe68uktxf" path="res://assets/MKTrack.png" id="1_ne215"]
 [ext_resource type="PackedScene" uid="uid://iihobhn6lxt3" path="res://player.tscn" id="2_sugm7"]
 [ext_resource type="Texture2D" uid="uid://cqxgqm2tlgms1" path="res://icon.svg" id="3_dl3gg"]
+[ext_resource type="PackedScene" uid="uid://dtscwqkimil3u" path="res://hud.tscn" id="4_bmor7"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_5dvn4"]
 texture = ExtResource("3_dl3gg")
@@ -65,8 +67,16 @@ texture = ExtResource("3_dl3gg")
 physics_layer_0/collision_layer = 1
 sources/5 = SubResource("TileSetAtlasSource_5dvn4")
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3cb3j"]
+size = Vector2(731, 34)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0amc0"]
+size = Vector2(53, 670)
+
 [node name="Main" type="Node2D"]
+script = ExtResource("1_fypi5")
 metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
 
 [node name="TextureRect" type="TextureRect" parent="."]
 texture_filter = 3
@@ -94,5 +104,27 @@ collision_mask = 0
 [node name="InsideHazards" type="CollisionPolygon2D" parent="Hazards"]
 polygon = PackedVector2Array(472, 7, 478, -489, 558, -663, 704, -739, 875, -752, 1002, -720, 1072, -669, 1183, -546, 1472, 19, 1656, 118, 2291, 124, 2424, 79, 2590, -70, 2701, -403, 2783, -689, 2929, -771, 3079, -781, 3155, -790, 3304, -736, 3428, -612, 3526, -336, 3510, 29, 3437, 216, 3158, 324, 1291, 812, 1212, 1096, 1329, 1355, 1425, 1400, 1677, 1433, 1880, 1426, 2082, 1435, 2117, 1394, 2221, 1397, 2260, 1375, 3155, 1369, 3279, 1412, 3444, 1494, 3495, 1628, 3547, 1747, 3543, 1826, 3540, 1918, 3520, 1985, 3482, 2087, 3421, 2141, 3272, 2201, 3091, 2249, 2948, 2261, 2745, 2264, 2609, 2240, 2545, 2115, 2510, 1955, 2421, 1830, 2187, 1799, 1771, 1815, 1545, 2031, 1244, 2294, 898, 2405, 593, 2256, 489, 1907)
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Hazards"]
+[node name="OutsideHazards" type="CollisionPolygon2D" parent="Hazards"]
 polygon = PackedVector2Array(137, 1700, 142, -489, 244, -824, 424, -1028, 672, -1137, 910, -1139, 1107, -1070, 1326, -904, 1634, -345, 1721, -190, 2011, -169, 2244, -178, 2371, -387, 2479, -830, 2683, -1028, 2977, -1100, 3258, -1112, 3522, -1046, 3684, -818, 3796, -537, 3810.87, -304.262, 3812, 26, 3784, 208, 3624, 446, 3364, 553, 2749, 710, 1712, 986, 1712, 1064, 1826, 1088, 2467, 1094, 2587, 1064, 3211, 1058, 3306, 1088, 3552, 1168, 3716, 1325, 3822, 1591, 3846, 1813, 3785, 2148, 3642, 2346, 3374, 2514, 3203, 2536, 2520, 2532, 2411, 2499, 2308, 2404, 2258, 2285, 2249, 2209, 2170, 2110, 1942, 2105, 1835, 2155, 1783, 2178, 1387, 2576, 1098, 2661, 995.473, 2688.47, 738, 2695, 491, 2621, 305, 2412, 154, 1843, 146, 1725, 3, 1730, -2, 2742, 3948, 2736, 3954, -1220, -2, -1214, -14, 1711)
+
+[node name="HUD" parent="." instance=ExtResource("4_bmor7")]
+
+[node name="Finish" type="Area2D" parent="."]
+collision_layer = 8
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Finish"]
+position = Vector2(355.5, 437)
+shape = SubResource("RectangleShape2D_3cb3j")
+
+[node name="Checkpoint" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Checkpoint"]
+position = Vector2(1757.5, 765)
+shape = SubResource("RectangleShape2D_0amc0")
+
+[connection signal="lap" from="player" to="HUD" method="_on_player_lap"]
+[connection signal="race_finish" from="player" to="HUD" method="_on_player_race_finish"]
+[connection signal="start_game" from="HUD" to="." method="_on_hud_start_game"]

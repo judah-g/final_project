@@ -1,0 +1,62 @@
+[gd_scene load_steps=6 format=3 uid="uid://dtscwqkimil3u"]
+
+[ext_resource type="Script" path="res://hud.gd" id="1_rei8t"]
+[ext_resource type="FontFile" uid="uid://crge8crq4qjnm" path="res://assets/Kenney Bold.ttf" id="2_0m7xj"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_sylm3"]
+font = ExtResource("2_0m7xj")
+font_size = 40
+shadow_size = 9
+shadow_offset = Vector2(3, 3)
+
+[sub_resource type="LabelSettings" id="LabelSettings_bkvqy"]
+font = ExtResource("2_0m7xj")
+font_size = 30
+
+[sub_resource type="LabelSettings" id="LabelSettings_5l66u"]
+font = ExtResource("2_0m7xj")
+
+[node name="HUD" type="CanvasLayer"]
+script = ExtResource("1_rei8t")
+
+[node name="Title" type="Label" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Mario Kart!"
+label_settings = SubResource("LabelSettings_sylm3")
+
+[node name="Timer" type="Label" parent="."]
+visible = false
+offset_left = 9.0
+offset_top = 6.0
+offset_right = 84.0
+offset_bottom = 63.0
+text = "
+"
+label_settings = SubResource("LabelSettings_bkvqy")
+
+[node name="Lap" type="Label" parent="."]
+offset_left = 729.0
+offset_top = 5.0
+offset_right = 869.0
+offset_bottom = 71.0
+label_settings = SubResource("LabelSettings_5l66u")
+
+[node name="Button" type="Button" parent="."]
+offset_left = 2.0
+offset_top = 72.0
+offset_right = 797.0
+offset_bottom = 802.0
+text = "Click to start..."
+flat = true
+
+[connection signal="pressed" from="Button" to="." method="_on_start_button_pressed"]
